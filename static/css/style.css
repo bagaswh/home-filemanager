@@ -1,0 +1,30 @@
+/* bootstrap overrides */
+.form-control {
+  width: auto;
+  display: inline-block;
+}
+.row {
+  padding: 0;
+  margin: 0;
+}
+
+.files-entry {
+  cursor: pointer;
+}
+.files-entry:hover {
+  background-color: #ddd;
+}
+
+.files-entry-title {
+  cursor: pointer;
+}
+.files-entry-title:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item {
+  cursor: pointer;
+}
+.breadcrumb-item:hover {
+  text-decoration: underline;
+}

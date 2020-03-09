@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>File Manager</title>
+
+  <link rel="stylesheet" href="static/css/vendors/bootstrap.min.css">
+  <link rel="stylesheet" href="static/css/style.css">
+
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="files p-2">
+      <div class="nav-buttons">
+        <button class="btn btn-primary btn-prev" :disabled="!isAbleToPrev()" @click="prevDir()">&lt;</button>
+        <button class="btn btn-primary btn-next" :disabled="!isAbleToNext()" @click="nextDir()">&gt;</button>
+      </div>
+      <div class="breadcrumb current-dir mt-2 mb-2">
+        <span class="breadcrumb-item current-dir-item" v-for="(path, index) in getCompleteCurrentDir().split('/')"
+          @click="goToDirectoryIndex(index)">
+          {{ path }}
+        </span>
+      </div>
+      <div class="filter">
+        <div class="sort form-group">
+          <label for="sort-by">Sort by</label>
+          <select id="sort-by" class="form-control d-inline" v-model="sortBy">
+            <option value="date">Date modified</option>
+            <option value="size">Size</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+      </div>
+      <ul class="files-list list-unstyled" v-if="ready">
+        <li v-for="file in files" class="files-entry p-1 border">
+          <div v-if="file.IsDir" class="files-entry-title" @click="enterDirectory(file.Name)">
+            {{ file.Name }}</div>
+
+          <div v-else class="d-block" @click="goToPage(`files${getCompleteCurrentDir()}/${file.Name}`)">
+            <a :href="`files${getCompleteCurrentDir()}/${file.Name}`">Link</a>
+            <span class="d-block"> <b>{{ file.Name }}</b> </span>
+            <div class="row">
+              <span class="d-block mr-auto"> {{ getFileSize(file.Size) }} </span>
+              <span class="d-block text-right"> {{ new Date(file.ModTime).toLocaleString() }} </span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+
+<script src="static/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="static/js/vendors/vue.js"></script>
+<script src="static/js/script.js"></script>
+
+</html>
